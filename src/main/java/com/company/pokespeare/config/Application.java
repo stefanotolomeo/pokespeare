@@ -13,7 +13,7 @@ import java.text.NumberFormat;
 @SpringBootApplication(scanBasePackageClasses = Application.class)
 public class Application {
 
-	private static final Logger LOG = LoggerFactory.getLogger(Application.class);
+	private static final Logger log = LoggerFactory.getLogger(Application.class);
 
 	public static void main(String[] args) {
 		printJavaOpts();
@@ -32,12 +32,12 @@ public class Application {
 		final long mbSize = 1024L * 1024L;
 		final String mega = " MB";
 
-		LOG.info("============================ PokeSpeare =============================");
-		LOG.info("============================ Memory Info =============================");
-		LOG.info("Free memory: {}", format.format(freeMemory / mbSize) + mega);
-		LOG.info("Allocated memory: {}", format.format(allocatedMemory / mbSize) + mega);
-		LOG.info("Max memory: {}", format.format(maxMemory / mbSize) + mega);
-		LOG.info("Total free memory: {}", format.format((freeMemory + maxMemory - allocatedMemory) / mbSize) + mega);
-		LOG.info("=================================================================\n");
+		log.info("============================ PokeSpeare =============================");
+		log.info("============================ Memory Info =============================");
+		log.info("Free memory: {}", format.format(freeMemory / mbSize) + mega);
+		log.info("Allocated memory: {}", format.format(allocatedMemory / mbSize) + mega);
+		log.info("Max memory: {}", format.format(maxMemory / mbSize) + mega);
+		log.info("Total free memory: {}", format.format((freeMemory + maxMemory - allocatedMemory) / mbSize) + mega);
+		log.info("=================================================================\n");
 	}
 }
