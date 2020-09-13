@@ -1,14 +1,12 @@
 package com.company.pokespeare.http.client;
 
-import com.company.pokespeare.config.BaseIT;
+import com.company.pokespeare.itconfig.BaseIT;
 import com.company.pokespeare.http.model.BaseHttpRequest;
 import com.company.pokespeare.http.model.BaseHttpResponse;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import javax.inject.Inject;
-import java.io.IOException;
 
 // Manual test
 // @Disabled

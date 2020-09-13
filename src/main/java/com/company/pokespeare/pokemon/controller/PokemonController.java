@@ -1,19 +1,20 @@
 package com.company.pokespeare.pokemon.controller;
 
-import com.company.pokespeare.config.AbstractLogger;
 import com.company.pokespeare.http.manager.HttpManager;
 import com.company.pokespeare.http.model.BaseHttpRequest;
 import com.company.pokespeare.http.model.BaseHttpResponse;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 
+@RequestMapping("/pokemon")
 @RestController
-public class PokemonController extends AbstractLogger {
+public class PokemonController extends AbstractController {
 
 	@Inject
 	private HttpManager httpManager;
@@ -41,7 +42,7 @@ public class PokemonController extends AbstractLogger {
 		log.info("URIs built: PokemonURI={}, ShakespeareURI={}", pokemonCompleteUri, shakespeareCompleteUri);
 	}
 
-	@GetMapping("/pokemon/{name}")
+	@GetMapping("/{name}")
 	public BaseHttpResponse getShakespearizedPokemonByName(
 			@PathVariable("name")
 					String name) {
