@@ -1,27 +1,14 @@
 package com.company.pokespeare.http.model;
 
-import org.apache.http.client.methods.HttpGet;
+public abstract class BaseHttpRequest {
 
-public class BaseHttpRequest {
+	private String url;
 
-	private String requestUri;
-	private HttpGet httpGetRequest;
-
-	public BaseHttpRequest(String requestUri) {
-		this.requestUri = requestUri;
-		this.httpGetRequest = new HttpGet(requestUri);
+	public BaseHttpRequest(String url) {
+		this.url = url;
 	}
 
-	public String getRequestUri() {
-		return requestUri;
-	}
-
-	public HttpGet getHttpGetRequest() {
-		return httpGetRequest;
-	}
-
-	@Override
-	public String toString() {
-		return "BaseHttpRequest{" + "requestUri='" + requestUri + '\'' + ", httpGetRequest=" + httpGetRequest + '}';
+	public String getUrl() {
+		return url;
 	}
 }

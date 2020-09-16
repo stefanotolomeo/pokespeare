@@ -6,4 +6,5 @@ public class Constants {
 
 	public static final String BASE_URL = "/";
 	public static final String POKEMON_URL = "/pokemon/";
+
 }

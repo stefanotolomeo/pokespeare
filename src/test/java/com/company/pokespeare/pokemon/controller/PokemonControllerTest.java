@@ -31,7 +31,7 @@ class PokemonControllerTest extends BaseWebTest {
 		String dittoPayload = "Hello " + dittoName;
 
 		BaseHttpResponse dittoResponse = new BaseHttpResponse(200, dittoPayload);
-		Mockito.when(pokemonController.getShakespearizedPokemonByName(dittoName)).thenReturn(dittoResponse);
+		Mockito.when(pokemonController.getPokemonByName(dittoName)).thenReturn(dittoResponse);
 
 		String dittoUrl = Constants.POKEMON_URL + dittoName;
 
