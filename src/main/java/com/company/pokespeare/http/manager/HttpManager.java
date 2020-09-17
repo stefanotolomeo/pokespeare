@@ -1,6 +1,7 @@
 package com.company.pokespeare.http.manager;
 
 import com.company.pokespeare.http.client.HttpClient;
+import com.company.pokespeare.http.exception.InvalidRequestException;
 import com.company.pokespeare.http.logic.RequestConverter;
 import com.company.pokespeare.http.model.BaseHttpResponse;
 import com.company.pokespeare.http.model.GetRequest;
@@ -39,6 +40,9 @@ public class HttpManager {
 			HttpGet httpGetRequest = requestConverter.convertGetRequest(request);
 			response = httpClient.makeGetRequest(httpGetRequest);
 
+		} catch (InvalidRequestException e) {
+			log.error("Invalid GET Request received", e);
+			response = new BaseHttpResponse(INTERNAL_ERROR_CODE, INTERNAL_ERROR_MESSAGE);
 		} catch (Exception e) {
 			log.error("Exception while making GET request", e);
 			response = new BaseHttpResponse(INTERNAL_ERROR_CODE, INTERNAL_ERROR_MESSAGE);
@@ -55,6 +59,9 @@ public class HttpManager {
 			HttpPost httpPostRequest = requestConverter.convertPostRequest(request);
 			response = httpClient.makePostRequest(httpPostRequest);
 
+		} catch (InvalidRequestException e) {
+			log.error("Invalid GET Request received", e);
+			response = new BaseHttpResponse(INTERNAL_ERROR_CODE, INTERNAL_ERROR_MESSAGE);
 		} catch (Exception e) {
 			log.error("Exception while making POST request", e);
 			response = new BaseHttpResponse(INTERNAL_ERROR_CODE, INTERNAL_ERROR_MESSAGE);

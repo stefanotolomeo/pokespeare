@@ -7,7 +7,7 @@ public class Outcome {
 
 	private ShakespeareRequest shakespeareRequest;
 	private ShakespeareResponse shakespeareResponse;
-	
+
 	private Throwable exception;
 
 	// TODO: implement
