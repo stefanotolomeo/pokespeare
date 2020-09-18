@@ -18,7 +18,10 @@ import static java.nio.charset.StandardCharsets.UTF_8;
 public class ResponseValidatorTest extends BaseTest {
 
 	private final static String shakespeareResponse1_path = "/fixture/shakespeare_response_1.json";
+	private final static String pokemonResponse1_path = "/fixture/pokemon_response_1.json";
+
 	private static String shakespeareResponse_1;
+	private static String pokemonResponse_1;
 
 	@Inject
 	private ResponseValidator responseValidator;
@@ -27,6 +30,7 @@ public class ResponseValidatorTest extends BaseTest {
 	static void setuo() throws Exception{
 
 		shakespeareResponse_1 = IOUtils.toString(ResponseValidatorTest.class.getResourceAsStream(shakespeareResponse1_path), UTF_8);
+		pokemonResponse_1 = IOUtils.toString(ResponseValidatorTest.class.getResourceAsStream(pokemonResponse1_path), UTF_8);
 	}
 
 	@Test
@@ -53,6 +57,13 @@ public class ResponseValidatorTest extends BaseTest {
 	@Test
 	void validatePokemonResponse_Test(){
 		// TODO
+		BaseHttpResponse resp = new BaseHttpResponse(200, pokemonResponse_1);
+		PokemonDTO pokemonDTO = responseValidator.validatePokemonResponse(resp);
+
+		Assertions.assertNotNull(pokemonDTO);
+		Assertions.assertNotNull(pokemonDTO.getFlavorTextEntries());
+		Assertions.assertFalse(pokemonDTO.getFlavorTextEntries().isEmpty());
+
 	}
 
 	@Test

@@ -11,4 +11,9 @@ public class ShakespeareSuccess {
 	public void setTotal(int total) {
 		this.total = total;
 	}
+
+	@Override
+	public String toString() {
+		return "ShakespeareSuccess{" + "total=" + total + '}';
+	}
 }

@@ -1,7 +1,7 @@
 package com.company.pokespeare.pokemon.controller;
 
 import com.company.pokespeare.config.Constants;
-import com.company.pokespeare.http.model.BaseHttpResponse;
+import com.company.pokespeare.pokemon.model.Outcome;
 import com.company.pokespeare.testconfig.BaseWebTest;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -30,8 +30,8 @@ class PokemonControllerTest extends BaseWebTest {
 		String dittoName = "ditto";
 		String dittoPayload = "Hello " + dittoName;
 
-		BaseHttpResponse dittoResponse = new BaseHttpResponse(200, dittoPayload);
-		Mockito.when(pokemonController.getPokemonByName(dittoName)).thenReturn(dittoResponse);
+		Outcome outcome = Outcome.ok(dittoName, dittoPayload);
+		Mockito.when(pokemonController.getPokemonByName(dittoName)).thenReturn(outcome);
 
 		String dittoUrl = Constants.POKEMON_URL + dittoName;
 
@@ -43,7 +43,7 @@ class PokemonControllerTest extends BaseWebTest {
 		//@formatter:on
 
 		String content = result.getResponse().getContentAsString();
-		String expectedContent = "{\"statusCode\":200,\"payload\":\"Hello ditto\"}";
+		String expectedContent = "{\"status\":\"OK\",\"pokemonName\":\"ditto\",\"translation\":\"Hello ditto\",\"errorMessages\":[]}";
 		Assertions.assertEquals(expectedContent, content);
 
 	}

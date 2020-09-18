@@ -29,4 +29,10 @@ public class ShakespeareContent {
 	public void setTranslation(String translation) {
 		this.translation = translation;
 	}
+
+	@Override
+	public String toString() {
+		return "ShakespeareContent{" + "translated='" + translated + '\'' + ", text='" + text + '\'' + ", translation='" + translation
+				+ '\'' + '}';
+	}
 }
