@@ -1,3 +1,9 @@
+request:
+  threadpool:
+    corepoolsize: 1
+    maxpoolsize: 2
+    threadpriority: 5 # default is 5 shared by all threadpools
+
 
 http:
   pokemon:

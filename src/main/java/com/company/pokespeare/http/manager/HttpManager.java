@@ -30,7 +30,6 @@ public class HttpManager {
 	@Inject
 	private RequestConverter requestConverter;
 
-	// TODO: initialize thread pool
 	@Async("requestThreadPool")
 	public CompletableFuture<BaseHttpResponse> makeGetRequest(GetRequest request) {
 		BaseHttpResponse response;
