@@ -3,59 +3,11 @@ http:
   pokemon:
     base: https://pokeapi.co/api/v2/
     api:
-      berry: berry/
-      contests:
-        type: contest-type/
-        effect: contest-effect/
-        super_effect: super-contest-effect/
-      encounters:
-        method: encounter-method/
-        condition: encounter-condition/
-        condition_value: encounter-condition-value/
-      evolution:
-        chain: evolution-chain/
-        trigger: evolution-trigger/
-      games:
-        generation: generation/
-        pokedex: pokedex/
-        version: version/
-        version_group: version-group/
-      items:
-        item: item/
-        item_attribute: item-attribute/
-        item_category: item-category/
-        item_fling_effect: item-fling-effect/
-        item_pocket: item-pocket/
-      locations:
-        location: location/
-        location_area: location-area/
-        pal_park_area: pal-park-area/
-        region: region/
-      machine: machine/
-      moves:
-        move: move/
-        move_ailment: move-ailment/
-        move_battle_style: move-battle-style/
-        move_category: move-category/
-        move_damage_class: move-damage-class/
-        move_learn_method: move-learn-method/
-        move_target: move-target/
+      ## if needed add other endpoints: berry, evolution, moves, etc..
       pokemon:
-        ability: ability/
-        characteristic: characteristic/
-        egg_group: egg-group/
-        gender: gender/
-        growth-rate: growth-rate/
-        nature: nature/
-        pokeathlon_stat: pokeathlon-stat/
-        pokemon: pokemon/
-        pokemon_form: pokemon-form/
-        pokemon_habitat: pokemon-habitat/
-        pokemon_shape: pokemon-shape/
+        ## other endpoints if needed
         pokemon_species: pokemon-species/
-        stat: stat/
-        type: type/
   shakespeare:
     base: api.funtranslations.com/translate/
     api:
-      shakespeare: /shakespeare
+      shakespeare: shakespeare
