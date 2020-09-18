@@ -20,7 +20,7 @@ public class HttpClient implements IHttpClient {
 
 	@Override
 	public BaseHttpResponse makeGetRequest(HttpGet request) throws Exception {
-		log.info("GET-Request: start with request={}", request);
+		log.debug("GET-Request: start with request={}", request);
 
 		try (CloseableHttpClient httpClient = HttpClients.createDefault();
 				CloseableHttpResponse response = httpClient.execute(request)) {
@@ -38,7 +38,7 @@ public class HttpClient implements IHttpClient {
 
 	@Override
 	public BaseHttpResponse makePostRequest(HttpPost request) throws IOException {
-		log.info("POST-Request: start with request={}", request);
+		log.debug("POST-Request: start with request={}", request);
 
 		try (CloseableHttpClient httpClient = HttpClients.createDefault();
 				CloseableHttpResponse response = httpClient.execute(request)) {

@@ -18,7 +18,7 @@ public class PokemonDescriptionSelector {
 	// Here it is simply considered the first description and ignored the game version
 	public String selectDescription(PokemonDTO pokemonDTO){
 
-		log.debug("Selecting description for input: {}", pokemonDTO);
+		log.trace("Selecting description for input: {}", pokemonDTO);
 		Preconditions.checkNotNull(pokemonDTO, "PokemonDT0 is null");
 		Preconditions.checkNotNull(pokemonDTO.getFlavorTextEntries(), "FlavorTextEntries is null");
 
