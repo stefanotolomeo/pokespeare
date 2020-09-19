@@ -6,6 +6,7 @@ import com.company.pokespeare.testconfig.BaseWebTest;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
+import org.springframework.http.ResponseEntity;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
@@ -31,7 +32,8 @@ class PokemonControllerTest extends BaseWebTest {
 		String dittoPayload = "Hello " + dittoName;
 
 		Outcome outcome = Outcome.ok(dittoName, dittoPayload);
-		Mockito.when(pokemonController.getPokemonByName(dittoName)).thenReturn(outcome);
+		ResponseEntity<Outcome> responseEntity = ResponseEntity.ok().body(outcome);
+		Mockito.when(pokemonController.getPokemonByName(dittoName)).thenReturn(responseEntity);
 
 		String dittoUrl = Constants.POKEMON_URL + dittoName;
 
@@ -43,7 +45,7 @@ class PokemonControllerTest extends BaseWebTest {
 		//@formatter:on
 
 		String content = result.getResponse().getContentAsString();
-		String expectedContent = "{\"status\":\"OK\",\"name\":\"ditto\",\"translation\":\"Hello ditto\",\"errorMessages\":[]}";
+		String expectedContent = "{\"name\":\"ditto\",\"description\":\"Hello ditto\"}";
 		Assertions.assertEquals(expectedContent, content);
 
 	}

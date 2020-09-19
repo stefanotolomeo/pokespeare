@@ -1,65 +1,52 @@
 package com.company.pokespeare.pokemon.model;
 
-import java.util.Collections;
-import java.util.List;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
 
+// NON_EMPTY rule covers NON_NULL too
+@JsonInclude(JsonInclude.Include.NON_EMPTY)
 public class Outcome {
 
-	private String status;    // OK, NOT_OK
+	@JsonIgnore
+	private int statusCode;    // 200, 400, 502
 	private String name;    // Pokemon Name
-	private String translation;    // Shakespeare Translation
-	private List<String> errorMessages;    // Populated only if status = NOT_OK
+	private String description;    // Shakespeare Translation
+	private String error;    // Populated only if status = NOT_OK
 
-	private Outcome(String status, String name, String translation, List<String> errorMessages) {
-		this.status = status;
+	private Outcome(int statusCode, String name, String description, String error) {
+		this.statusCode = statusCode;
 		this.name = name;
-		this.translation = translation;
-		this.errorMessages = errorMessages;
+		this.description = description;
+		this.error = error;
 	}
 
-	public static Outcome ok(String pokemonName, String translation) {
-		return new Outcome("OK", pokemonName, translation, Collections.emptyList());
+	public static Outcome ok(String pokemonName, String description) {
+		return new Outcome(200, pokemonName, description, null);
 	}
 
-	public static Outcome notOk(String pokemonName, List<String> errorMessages) {
-		return new Outcome("NOT OK", pokemonName, null, errorMessages);
+	public static Outcome notOk(String pokemonName, int statusCode, String errorMessage) {
+		return new Outcome(statusCode, pokemonName, null, errorMessage);
 	}
 
-	public String getStatus() {
-		return status;
-	}
-
-	public void setStatus(String status) {
-		this.status = status;
-	}
-
-	public String getTranslation() {
-		return translation;
-	}
-
-	public void setTranslation(String translation) {
-		this.translation = translation;
+	public int getStatusCode() {
+		return statusCode;
 	}
 
 	public String getName() {
 		return name;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public String getDescription() {
+		return description;
 	}
 
-	public List<String> getErrorMessages() {
-		return errorMessages;
-	}
-
-	public void setErrorMessages(List<String> errorMessages) {
-		this.errorMessages = errorMessages;
+	public String getError() {
+		return error;
 	}
 
 	@Override
 	public String toString() {
-		return "Outcome{" + "status='" + status + '\'' + ", name='" + name + '\'' + ", translation='" + translation + '\''
-				+ ", errorMessages=" + errorMessages + '}';
+		return "Outcome{" + "statusCode=" + statusCode + ", name='" + name + '\'' + ", description='" + description + '\'' + ", error="
+				+ error + '}';
 	}
 }

@@ -20,7 +20,7 @@ public class ResponseValidator {
 	private ObjectMapper mapper = new ObjectMapper();
 
 	public PokemonDTO validatePokemonResponse(BaseHttpResponse response) {
-		log.debug("Validating pokemon response: {}", response);
+		log.debug("Validating Pokemon-Response: {}", response);
 		try {
 			Preconditions.checkArgument(response != null && response.getPayload() != null, "Response from Pokemon-API is null");
 
@@ -38,11 +38,10 @@ public class ResponseValidator {
 		} catch (Exception e) {
 			throw new ResponseValidationException(ResponseType.POKEMON, "Validation failed for Pokemon-API response", e);
 		}
-
 	}
 
 	public ShakespeareDTO validateShakespeareResponse(BaseHttpResponse response) {
-		log.debug("Validating shakespeare response: {}", response);
+		log.debug("Validating Shakespeare-Response: {}", response);
 
 		try {
 

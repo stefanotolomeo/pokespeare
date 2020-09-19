@@ -19,18 +19,21 @@ public class ResponseSelector {
 	//  Here it is simply considered the first description and ignored the game version
 	public String selectPokemonDescription(PokemonDTO pokemonDTO) {
 
-		log.trace("Selecting description for input: {}", pokemonDTO);
+		log.debug("Selecting description for PokemonDTO");
 
 		try {
 			Preconditions.checkArgument(pokemonDTO != null && pokemonDTO.getFlavorTextEntries() != null, "PokemonDTO is null");
 
 			//@formatter:off
-			return pokemonDTO.getFlavorTextEntries().stream()
+			String selectedDescription = pokemonDTO.getFlavorTextEntries().stream()
 					.filter(el -> el.getLanguage().getName().equals(ENGLISH))
 					.map(PokemonFlavorTextEntry::getFlavorText)
 					.findFirst()
 					.get();
 			//@formatter:on
+
+			log.debug("Selected description is: {}", selectedDescription);
+			return selectedDescription;
 		} catch (Exception e) {
 			throw new RuntimeException("Cannot select a pokemon description from PokemonDTO", e);
 		}
@@ -38,6 +41,7 @@ public class ResponseSelector {
 	}
 
 	public String selectShakespeareTranslation(ShakespeareDTO shakespeareDTO){
+		log.debug("Selecting translation for ShakespeareDTO");
 		try{
 			return shakespeareDTO.getContents().getTranslated();
 		} catch (Exception e){

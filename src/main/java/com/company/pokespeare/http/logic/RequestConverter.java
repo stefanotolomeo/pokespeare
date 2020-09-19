@@ -25,7 +25,7 @@ public class RequestConverter {
 			HttpGet httpGet = new HttpGet(getRequest.getUrl());
 			httpGet.setHeader("Accept", "application/json");
 			httpGet.addHeader("Accept-Language", "en-gb");
-			httpGet.addHeader("Content-Type", "application/json");
+			httpGet.addHeader("Content-Type", "application/json; charset=utf-8");
 			// Eventually set other headers if needed (e.g. user-agent)
 
 			return httpGet;
