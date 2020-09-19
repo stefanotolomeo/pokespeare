@@ -40,11 +40,15 @@ public class ResponseSelector {
 
 	}
 
-	public String selectShakespeareTranslation(ShakespeareDTO shakespeareDTO){
+	public String selectShakespeareTranslation(ShakespeareDTO shakespeareDTO) {
 		log.debug("Selecting translation for ShakespeareDTO");
-		try{
+		try {
+			Preconditions.checkArgument(
+					shakespeareDTO != null && shakespeareDTO.getContents() != null && shakespeareDTO.getContents().getTranslated() != null,
+					"ShakespeareDTO is null");
+			Preconditions.checkArgument(!shakespeareDTO.getContents().getTranslated().isEmpty(), "Empty translation received");
 			return shakespeareDTO.getContents().getTranslated();
-		} catch (Exception e){
+		} catch (Exception e) {
 			throw new RuntimeException("Cannot select a shakespeare translation from ShakespeareDTO", e);
 		}
 	}
