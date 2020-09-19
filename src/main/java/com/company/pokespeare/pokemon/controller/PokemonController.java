@@ -3,12 +3,13 @@ package com.company.pokespeare.pokemon.controller;
 import com.company.pokespeare.http.manager.HttpManager;
 import com.company.pokespeare.pokemon.dto.PokemonDTO;
 import com.company.pokespeare.pokemon.dto.ShakespeareDTO;
-import com.company.pokespeare.pokemon.logic.PokemonDescriptionSelector;
+import com.company.pokespeare.pokemon.exception.ResponseValidationException;
+import com.company.pokespeare.pokemon.logic.ResponseSelector;
 import com.company.pokespeare.pokemon.logic.ResponseValidator;
-import com.company.pokespeare.pokemon.logic.ShakespeareTranslationSelector;
 import com.company.pokespeare.pokemon.model.Outcome;
 import com.company.pokespeare.pokemon.model.PokemonRequest;
 import com.company.pokespeare.pokemon.model.ShakespeareRequest;
+import com.google.common.base.Preconditions;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -33,10 +34,7 @@ public class PokemonController extends AbstractController {
 	private ResponseValidator responseValidator;
 
 	@Inject
-	private PokemonDescriptionSelector pokemonDescriptionSelector;
-
-	@Inject
-	private ShakespeareTranslationSelector shakespeareTranslationSelector;
+	private ResponseSelector responseSelector;
 
 	@Value("${http.pokemon.base}")
 	private String pokemonBaseUri;
@@ -70,48 +68,50 @@ public class PokemonController extends AbstractController {
 		log.debug("Received GET request with pokemonName={}", name);
 
 		try {
-			// TODO: validate input string: null/empty
+			Preconditions.checkNotNull(name, "Input is null");
+			Preconditions.checkArgument(!name.isEmpty(), "Input is empty");
 			String pokemonUriWithName = pokemonCompleteUri + name;
 			PokemonRequest req_1 = new PokemonRequest(pokemonUriWithName);
 
-			// Steps to be followed:
-			//  (1) Call Pokemon-API
-			//  (2) Parse response and read fields into "flavor_text_entries";
-			//  (3) Build the request for the second API call;
-			//  (2) Call Shakespeare-API to shakespearized the description;
-			//  (3) Parse response, check and return
-
 			CompletableFuture<Outcome> outcome =
+					//  (1) Call Pokemon-API
 					httpManager.makeGetRequest(req_1)
 					.thenApply((resp_1 -> {
+						//  (2) Validate/Parse response and build the request for the second API call
 						PokemonDTO pokemonDTO = responseValidator.validatePokemonResponse(resp_1);
-						String selectedDescription = pokemonDescriptionSelector.selectDescription(pokemonDTO);
+						String selectedDescription = responseSelector.selectPokemonDescription(pokemonDTO);
 						return new ShakespeareRequest(shakespeareCompleteUri, selectedDescription);
 					}))
+					//  (3) Call Shakespeare-API to shakespearized the description;
 					.thenCompose(req_2 -> httpManager.makePostRequest(req_2))
 					.thenApply(resp_2 -> {
+						//  (4) Validate/Parse response and create the outcome
 						ShakespeareDTO shakespeareDTO = responseValidator.validateShakespeareResponse(resp_2);
-						String translation = shakespeareTranslationSelector.selectTranslation(shakespeareDTO);
+						String translation = responseSelector.selectShakespeareTranslation(shakespeareDTO);
 						return Outcome.ok(name, translation);
 					})
 					.exceptionally(e -> {
 						log.error("Exception with at least one future", e);
-						// TODO: change
 						String msg = "Error while processing request";
+						if(e.getCause()!= null && e.getCause() instanceof ResponseValidationException){
+							ResponseValidationException castedExp = (ResponseValidationException) e.getCause();
+							switch (castedExp.getResponseType()){
+							case POKEMON:
+								msg = "Error while getting Pokemon info. Ensure pokemon name is correct";
+								break;
+							case SHAKESPEARE:
+								msg = "Error while getting Shakespeare translation. Max attempts per hour is 5";
+								break;
+							}
+						}
 						return Outcome.notOk(name, Collections.singletonList(msg));
 					});
-
-			// TODO: manage
-			/*if (outcome.isCompletedExceptionally()){
-				throw new Exception("Future completed with Exception", outcome.get().toString());
-			}*/
 
 			return outcome.get(10, TimeUnit.SECONDS);
 
 
 		} catch (Exception e) {
 			log.error("Exception while making HTTP calls to remote service", e);
-			// TODO: manage
 			String msg = "Unexpected Internal Error";
 
 			return Outcome.notOk(name, Collections.singletonList(msg));

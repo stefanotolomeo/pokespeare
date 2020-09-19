@@ -9,20 +9,39 @@ import org.apache.http.message.BasicNameValuePair;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Value;
 
+import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 import java.util.Collections;
 
 // Manual test
-@Disabled
+// @Disabled
 class HttpClientIT extends BaseIT {
 
 	@Inject
 	private HttpClient httpClient;
 
-	// TODO: read from application-it.properties
-	private final String pokemonUri = "https://pokeapi.co/api/v2/pokemon/";
-	private final String shakespeareUri = "https://api.funtranslations.com/translate/shakespeare/";
+	@Value("${http.pokemon.base}")
+	private String pokemonBaseUri;
+
+	@Value("${http.pokemon.api.pokemon.pokemon_species}")
+	private String pokemonPath;
+
+	@Value("${http.shakespeare.base}")
+	private String shakespeareBaseUri;
+
+	@Value("${http.shakespeare.api.shakespeare}")
+	private String shakespearePath;
+
+	private String pokemonUri;
+	private String shakespeareUri;
+
+	@PostConstruct
+	public void postConstruct() {
+		this.pokemonUri = (pokemonBaseUri + pokemonPath).trim();
+		this.shakespeareUri = (shakespeareBaseUri + shakespearePath).trim();
+	}
 
 	@Test
 	void makeGetRequest_Test() throws Exception {

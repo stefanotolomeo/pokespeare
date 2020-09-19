@@ -43,7 +43,7 @@ class PokemonControllerTest extends BaseWebTest {
 		//@formatter:on
 
 		String content = result.getResponse().getContentAsString();
-		String expectedContent = "{\"status\":\"OK\",\"pokemonName\":\"ditto\",\"translation\":\"Hello ditto\",\"errorMessages\":[]}";
+		String expectedContent = "{\"status\":\"OK\",\"name\":\"ditto\",\"translation\":\"Hello ditto\",\"errorMessages\":[]}";
 		Assertions.assertEquals(expectedContent, content);
 
 	}

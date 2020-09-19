@@ -3,6 +3,9 @@ package com.company.pokespeare.pokemon.logic;
 import com.company.pokespeare.http.model.BaseHttpResponse;
 import com.company.pokespeare.pokemon.dto.PokemonDTO;
 import com.company.pokespeare.pokemon.dto.ShakespeareDTO;
+import com.company.pokespeare.pokemon.exception.ResponseType;
+import com.company.pokespeare.pokemon.exception.ResponseValidationException;
+import com.company.pokespeare.pokemon.exception.ShakespeareLimitException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.base.Preconditions;
 import org.slf4j.Logger;
@@ -18,40 +21,53 @@ public class ResponseValidator {
 
 	public PokemonDTO validatePokemonResponse(BaseHttpResponse response) {
 		log.debug("Validating pokemon response: {}", response);
-		try{
-			baseResponseValidation(response);
-			return mapper.readValue(response.getPayload(), PokemonDTO.class);
-			// Do parse with jackson
-		} catch (Exception e){
-			throw new RuntimeException("Cannot validate pokemon response", e);
+		try {
+			Preconditions.checkArgument(response != null && response.getPayload() != null, "Response from Pokemon-API is null");
+
+			switch (response.getStatusCode()) {
+			case 200:
+				return mapper.readValue(response.getPayload(), PokemonDTO.class);
+			case 400:
+			case 404:
+				throw new Exception("Bad request to Pokemon-API");
+			default:
+				String msg = String.format("Response-status=%s is NOT OK", response.getStatusCode());
+				throw new Exception(msg);
+			}
+
+		} catch (Exception e) {
+			throw new ResponseValidationException(ResponseType.POKEMON, "Validation failed for Pokemon-API response", e);
 		}
 
 	}
 
-	// TODO: manage maximum request per hour to shakespeare API
-	/*
-	"error": {
- --->         "code": 429,
- --->         "message": "Too Many Requests: Rate limit of 5 requests per hour exceeded. Please wait for 59 minutes and 1 second."
- --->     }
- ---> }'}
-	 */
 	public ShakespeareDTO validateShakespeareResponse(BaseHttpResponse response) {
 		log.debug("Validating shakespeare response: {}", response);
 
-		try{
-			baseResponseValidation(response);
-			return mapper.readValue(response.getPayload(), ShakespeareDTO.class);
-			// Do parse with jackson
-		} catch (Exception e){
-			throw new RuntimeException("Cannot validate shakespeare response", e);
+		try {
+
+			Preconditions.checkArgument(response != null && response.getPayload() != null, "Response from Shakespeare-API is null");
+
+			switch (response.getStatusCode()) {
+			case 200:
+				return mapper.readValue(response.getPayload(), ShakespeareDTO.class);
+			case 400:
+				throw new Exception("Bad request to Shakespeare-API");
+			case 429:
+				/*
+					"code": 429,
+					"message": "Too Many Requests: Rate limit of 5 requests per hour exceeded. Please wait for 59 minutes and 1 second."
+				*/
+				throw new ShakespeareLimitException(
+						"Too Many Requests: Rate limit of 5 requests per hour exceeded. Please wait for 59 minutes and 1 second.");
+			default:
+				String msg = String.format("Response-status=%s is NOT OK", response.getStatusCode());
+				throw new Exception(msg);
+			}
+
+		} catch (Exception e) {
+			throw new ResponseValidationException(ResponseType.SHAKESPEARE, "Validation failed for Shakespeare-API response", e);
 		}
 
-	}
-
-	void baseResponseValidation(BaseHttpResponse response){
-		Preconditions.checkNotNull(response, "Response from PokemonDTO is null");
-		Preconditions.checkNotNull(response.getPayload(), "Response-Payload from Pokemon is null");
-		Preconditions.checkArgument(response.getStatusCode() == 200, "Response-Status is NOT OK: "+response.getStatusCode());
 	}
 }

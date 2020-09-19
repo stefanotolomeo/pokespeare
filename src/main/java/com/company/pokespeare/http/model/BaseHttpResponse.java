@@ -5,8 +5,6 @@ public class BaseHttpResponse {
 	private int statusCode;
 	private String payload;
 
-	// TODO: add exception here
-
 	public BaseHttpResponse(int statusCode, String payload) {
 		this.statusCode = statusCode;
 		this.payload = payload;

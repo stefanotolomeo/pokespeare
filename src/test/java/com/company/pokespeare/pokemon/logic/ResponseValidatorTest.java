@@ -3,6 +3,8 @@ package com.company.pokespeare.pokemon.logic;
 import com.company.pokespeare.http.model.BaseHttpResponse;
 import com.company.pokespeare.pokemon.dto.PokemonDTO;
 import com.company.pokespeare.pokemon.dto.ShakespeareDTO;
+import com.company.pokespeare.pokemon.exception.ResponseType;
+import com.company.pokespeare.pokemon.exception.ResponseValidationException;
 import com.company.pokespeare.testconfig.BaseTest;
 import org.apache.commons.io.IOUtils;
 import org.junit.jupiter.api.Assertions;
@@ -34,24 +36,38 @@ public class ResponseValidatorTest extends BaseTest {
 	}
 
 	@Test
-	void baseResponseValidation_Test(){
+	void validatePokemonResponse_Input_Test(){
 		// Test_1: Null Input
-		NullPointerException exp_1 = Assertions.assertThrows(
-				NullPointerException.class,
-				() -> responseValidator.baseResponseValidation(null));
-		Assertions.assertEquals("Response from PokemonDTO is null", exp_1.getMessage());
+		ResponseValidationException exp_1 = Assertions.assertThrows(
+				ResponseValidationException.class,
+				() -> responseValidator.validatePokemonResponse(null));
+		Assertions.assertEquals(ResponseType.POKEMON, exp_1.getResponseType());
+		Assertions.assertEquals("Validation failed for Pokemon-API response", exp_1.getMessage());
+		Assertions.assertEquals("Response from Pokemon-API is null", exp_1.getCause().getMessage());
 
 		// Test_2: Null Payload
-		NullPointerException exp_2 = Assertions.assertThrows(
-				NullPointerException.class,
-				() -> responseValidator.baseResponseValidation(new BaseHttpResponse(12345, null)));
-		Assertions.assertEquals("Response-Payload from Pokemon is null", exp_2.getMessage());
+		ResponseValidationException exp_2 = Assertions.assertThrows(
+				ResponseValidationException.class,
+				() -> responseValidator.validatePokemonResponse(new BaseHttpResponse(12345, null)));
+		Assertions.assertEquals(ResponseType.POKEMON, exp_2.getResponseType());
+		Assertions.assertEquals("Validation failed for Pokemon-API response", exp_2.getMessage());
+		Assertions.assertEquals("Response from Pokemon-API is null", exp_2.getCause().getMessage());
 
-		// Test_3: Bad response status
-		IllegalArgumentException exp_3 = Assertions.assertThrows(
-				IllegalArgumentException.class,
-				() -> responseValidator.baseResponseValidation(new BaseHttpResponse(12345, "Just a payload")));
-		Assertions.assertEquals("Response-Status is NOT OK: 12345", exp_3.getMessage());
+		// Test_3: Response Status is 400 (Bad request)
+		ResponseValidationException exp_3 = Assertions.assertThrows(
+				ResponseValidationException.class,
+				() -> responseValidator.validatePokemonResponse(new BaseHttpResponse(400, "Just a payload")));
+		Assertions.assertEquals(ResponseType.POKEMON, exp_3.getResponseType());
+		Assertions.assertEquals("Validation failed for Pokemon-API response", exp_3.getMessage());
+		Assertions.assertEquals("Bad request to Pokemon-API", exp_3.getCause().getMessage());
+
+		// Test_4: Bad response status
+		ResponseValidationException exp_4 = Assertions.assertThrows(
+				ResponseValidationException.class,
+				() -> responseValidator.validatePokemonResponse(new BaseHttpResponse(12345, "Just a payload")));
+		Assertions.assertEquals(ResponseType.POKEMON, exp_4.getResponseType());
+		Assertions.assertEquals("Validation failed for Pokemon-API response", exp_4.getMessage());
+		Assertions.assertEquals("Response-status=12345 is NOT OK", exp_4.getCause().getMessage());
 	}
 
 	@Test

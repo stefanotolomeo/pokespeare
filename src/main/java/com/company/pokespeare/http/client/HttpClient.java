@@ -1,6 +1,7 @@
 package com.company.pokespeare.http.client;
 
 import com.company.pokespeare.http.model.BaseHttpResponse;
+import com.google.common.base.Preconditions;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
@@ -25,7 +26,8 @@ public class HttpClient implements IHttpClient {
 		try (CloseableHttpClient httpClient = HttpClients.createDefault();
 				CloseableHttpResponse response = httpClient.execute(request)) {
 
-			// TODO: check response fields (e.g. null)
+			Preconditions.checkArgument(response != null && response.getStatusLine() != null && response.getEntity() != null,
+					"Received NULL objects from GET-Response");
 			int statusCode = response.getStatusLine().getStatusCode();
 			String payload = EntityUtils.toString(response.getEntity());
 
@@ -43,7 +45,8 @@ public class HttpClient implements IHttpClient {
 		try (CloseableHttpClient httpClient = HttpClients.createDefault();
 				CloseableHttpResponse response = httpClient.execute(request)) {
 
-			// TODO: check response fields (e.g. null)
+			Preconditions.checkArgument(response != null && response.getStatusLine() != null && response.getEntity() != null,
+					"Received NULL objects from POST-Response");
 			int statusCode = response.getStatusLine().getStatusCode();
 			String payload = EntityUtils.toString(response.getEntity());
 

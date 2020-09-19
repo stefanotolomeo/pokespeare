@@ -22,11 +22,13 @@ public class RequestConverter {
 
 	public HttpGet convertGetRequest(GetRequest getRequest) throws InvalidRequestException {
 		try {
-			// TODO: validate input
-			HttpGet convertedRequest = new HttpGet(getRequest.getUrl());
+			HttpGet httpGet = new HttpGet(getRequest.getUrl());
+			httpGet.setHeader("Accept", "application/json");
+			httpGet.addHeader("Accept-Language", "en-gb");
+			httpGet.addHeader("Content-Type", "application/json");
+			// Eventually set other headers if needed (e.g. user-agent)
 
-			// TODO: set headers
-			return convertedRequest;
+			return httpGet;
 		} catch (Exception e) {
 			throw new InvalidRequestException("Exception while converting GET request", e);
 		}
@@ -34,21 +36,23 @@ public class RequestConverter {
 
 	public HttpPost convertPostRequest(PostRequest postRequest) throws InvalidRequestException {
 		try {
-			// TODO: validate input
-			HttpPost convertedRequest = new HttpPost(postRequest.getUrl());
+			HttpPost httpPost = new HttpPost(postRequest.getUrl());
+			httpPost.setHeader("Accept", "application/json");
+			httpPost.addHeader("Accept-Language", "en-gb");
+			// Eventually set other headers if needed (e.g. user-agent)
 
-			// TODO: set headers
 			//@formatter:off
 			List<NameValuePair> urlParameters =  postRequest.getParams().entrySet().stream()
 				.map(entry -> new BasicNameValuePair(entry.getKey(), entry.getValue()))
 				.collect(Collectors.toList());
 			//@formatter:on
 
-			convertedRequest.setEntity(new UrlEncodedFormEntity(urlParameters));
+			httpPost.setEntity(new UrlEncodedFormEntity(urlParameters));
 
-			return convertedRequest;
+			return httpPost;
 		} catch (Exception e) {
 			throw new InvalidRequestException("Exception while converting POST request", e);
 		}
 	}
+
 }

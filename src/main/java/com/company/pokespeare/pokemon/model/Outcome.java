@@ -6,13 +6,13 @@ import java.util.List;
 public class Outcome {
 
 	private String status;    // OK, NOT_OK
-	private String pokemonName;
+	private String name;    // Pokemon Name
 	private String translation;    // Shakespeare Translation
 	private List<String> errorMessages;    // Populated only if status = NOT_OK
 
-	private Outcome(String status, String pokemonName, String translation, List<String> errorMessages) {
+	private Outcome(String status, String name, String translation, List<String> errorMessages) {
 		this.status = status;
-		this.pokemonName = pokemonName;
+		this.name = name;
 		this.translation = translation;
 		this.errorMessages = errorMessages;
 	}
@@ -41,12 +41,12 @@ public class Outcome {
 		this.translation = translation;
 	}
 
-	public String getPokemonName() {
-		return pokemonName;
+	public String getName() {
+		return name;
 	}
 
-	public void setPokemonName(String pokemonName) {
-		this.pokemonName = pokemonName;
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	public List<String> getErrorMessages() {
@@ -59,7 +59,7 @@ public class Outcome {
 
 	@Override
 	public String toString() {
-		return "Outcome{" + "status='" + status + '\'' + ", pokemonName='" + pokemonName + '\'' + ", translation='" + translation + '\''
+		return "Outcome{" + "status='" + status + '\'' + ", name='" + name + '\'' + ", translation='" + translation + '\''
 				+ ", errorMessages=" + errorMessages + '}';
 	}
 }
