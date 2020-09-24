@@ -1,0 +1,13 @@
+{
+  "request": {
+    "method": "GET",
+    "url": "/shakespeare/text=p"
+  },
+  "response": {
+    "status": 200,
+    "bodyFileName": "shakespeare/pikachu.json",
+    "headers": {
+      "Content-Type": "application/json"
+    }
+  }
+}

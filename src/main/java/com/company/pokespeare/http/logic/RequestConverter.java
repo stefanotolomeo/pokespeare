@@ -7,11 +7,13 @@ import org.apache.http.NameValuePair;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.client.utils.URIBuilder;
 import org.apache.http.message.BasicNameValuePair;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
+import java.net.URI;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -23,6 +25,16 @@ public class RequestConverter {
 	public HttpGet convertGetRequest(GetRequest getRequest) throws InvalidRequestException {
 		try {
 			HttpGet httpGet = new HttpGet(getRequest.getUrl());
+
+			if (getRequest.getParams() != null) {
+				URIBuilder uriBuilder = new URIBuilder(httpGet.getURI());
+
+				getRequest.getParams().forEach(uriBuilder::addParameter);
+				URI uri = uriBuilder.build();
+
+				httpGet.setURI(uri);
+			}
+
 			httpGet.setHeader("Accept", "application/json");
 			httpGet.addHeader("Accept-Language", "en-gb");
 			httpGet.addHeader("Content-Type", "application/json; charset=utf-8");

@@ -1,0 +1,26 @@
+version: '3.1'
+
+services:
+
+  wiremock:
+    image: rodolpheche/wiremock
+    restart: always
+    container_name: wiremock
+    volumes:
+      - ./files/pokemon/charizard.json:/home/wiremock/__files/pokemon/charizard.json
+      - ./files/pokemon/ditto.json:/home/wiremock/__files/pokemon/ditto.json
+      - ./files/pokemon/pikachu.json:/home/wiremock/__files/pokemon/pikachu.json
+
+      - ./files/shakespeare/charizard.json:/home/wiremock/__files/shakespeare/charizard.json
+      - ./files/shakespeare/ditto.json:/home/wiremock/__files/shakespeare/ditto.json
+      - ./files/shakespeare/pikachu.json:/home/wiremock/__files/shakespeare/pikachu.json
+
+      - ./mappings/pokemon/charizard.json:/home/wiremock/mappings/pokemon/charizard.json
+      - ./mappings/pokemon/ditto.json:/home/wiremock/mappings/pokemon/ditto.json
+      - ./mappings/pokemon/pikachu.json:/home/wiremock/mappings/pokemon/pikachu.json
+
+      - ./mappings/shakespeare/charizard.json:/home/wiremock/mappings/shakespeare/charizard.json
+      - ./mappings/shakespeare/ditto.json:/home/wiremock/mappings/shakespeare/ditto.json
+      - ./mappings/shakespeare/pikachu.json:/home/wiremock/mappings/shakespeare/pikachu.json
+    ports:
+      - 8080:8080

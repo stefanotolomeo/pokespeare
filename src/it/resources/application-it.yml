@@ -1,19 +1,25 @@
-request:
-  threadpool:
-    corepoolsize: 1
-    maxpoolsize: 2
-    threadpriority: 5 # default is 5 shared by all threadpools
-
 
 http:
   pokemon:
-    base: https://pokeapi.co/api/v2/
+    ### For REMOTE test
+    # base: https://pokeapi.co/api/v2/
+    ### For LOCALHOST test
+    base: http://localhost:4444/
     api:
-      ## if needed add other endpoints: berry, evolution, moves, etc..
+      ### if needed add other endpoints: E.g. berry, evolution, moves, etc..
       pokemon:
-        ## other endpoints if needed
-        pokemon_species: pokemon-species/
+        ### if needed add other endpoints for pokemon
+        ### For REMOTE test
+        # pokemon_species: pokemon-species/
+        ### For LOCALHOST test
+        pokemon_species: pokemon/
   shakespeare:
-    base: https://api.funtranslations.com/translate/
+    ### For REMOTE test
+    # base: https://api.funtranslations.com/translate/
+    ### For LOCALHOST test
+    pokemon_species: http://localhost:4444/
     api:
+      ### For REMOTE test
+      # shakespeare: shakespeare
+      ### For LOCALHOST test
       shakespeare: shakespeare

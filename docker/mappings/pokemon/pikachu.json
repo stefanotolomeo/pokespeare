@@ -1,0 +1,13 @@
+{
+  "request": {
+    "method": "GET",
+    "url": "/pokemon/pikachu"
+  },
+  "response": {
+    "status": 200,
+    "bodyFileName": "pokemon/pikachu.json",
+    "headers": {
+      "Content-Type": "application/json"
+    }
+  }
+}

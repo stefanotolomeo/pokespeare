@@ -1,0 +1,13 @@
+{
+  "request": {
+    "method": "GET",
+    "url": "/pokemon/ditto"
+  },
+  "response": {
+    "status": 200,
+    "bodyFileName": "pokemon/ditto.json",
+    "headers": {
+      "Content-Type": "application/json"
+    }
+  }
+}

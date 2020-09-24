@@ -59,7 +59,6 @@ public class PokemonController extends AbstractController {
 		log.info("URIs built: PokemonURI={}, ShakespeareURI={}", pokemonCompleteUri, shakespeareCompleteUri);
 	}
 
-	// TODO: use ResponseEntity<String> to set HEADER in response
 	@GetMapping(value = "/{name}", produces = MediaType.APPLICATION_JSON_VALUE)
 	ResponseEntity<Outcome> getPokemonByName(
 			@PathVariable("name")
@@ -83,7 +82,7 @@ public class PokemonController extends AbstractController {
 						return new ShakespeareRequest(shakespeareCompleteUri, selectedDescription);
 					}))
 					//  (3) Call Shakespeare-API to shakespearized the description;
-					.thenCompose(req_2 -> httpManager.makePostRequest(req_2)).thenApply(resp_2 -> {
+					.thenCompose(req_2 -> httpManager.makeGetRequest(req_2)).thenApply(resp_2 -> {
 						//  (4) Validate/Parse response and create the overallOutcome
 						ShakespeareDTO shakespeareDTO = responseValidator.validateShakespeareResponse(resp_2);
 						String translation = responseSelector.selectShakespeareTranslation(shakespeareDTO);
@@ -118,7 +117,7 @@ public class PokemonController extends AbstractController {
 				msg = "Error while getting Pokemon info. Ensure pokemon name is correct";
 				break;
 			case SHAKESPEARE:
-				msg = "Error while getting Shakespeare translation. Max attempts per hour is 5";
+				msg = "Error while getting Shakespeare translation. Bad response (consider max attempts per hour is 5)";
 				break;
 			}
 		}

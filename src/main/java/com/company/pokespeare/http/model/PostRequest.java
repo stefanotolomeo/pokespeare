@@ -2,6 +2,7 @@ package com.company.pokespeare.http.model;
 
 import java.util.TreeMap;
 
+// Currently not used
 public class PostRequest extends BaseHttpRequest {
 
 	TreeMap<String, String> params;

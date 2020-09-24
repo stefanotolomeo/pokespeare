@@ -1,0 +1,13 @@
+{
+  "request": {
+    "method": "GET",
+    "url": "/pokemon/charizard"
+  },
+  "response": {
+    "status": 200,
+    "bodyFileName": "pokemon/charizard.json",
+    "headers": {
+      "Content-Type": "application/json"
+    }
+  }
+}
