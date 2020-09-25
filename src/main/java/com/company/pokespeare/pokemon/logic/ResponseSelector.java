@@ -32,8 +32,10 @@ public class ResponseSelector {
 					.get();
 			//@formatter:on
 
+			String cleanedDescription = selectedDescription.replaceAll("[\\n\\t ]", "");
+
 			log.debug("Selected description is: {}", selectedDescription);
-			return selectedDescription;
+			return cleanedDescription;
 		} catch (Exception e) {
 			throw new RuntimeException("Cannot select a pokemon description from PokemonDTO", e);
 		}

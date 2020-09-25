@@ -32,7 +32,8 @@ public class HttpClient implements IHttpClient {
 			String payload = EntityUtils.toString(response.getEntity());
 
 			// Get HttpResponse Status
-			log.debug("GET-Request: Received response with Status={} and Payload={}", statusCode, payload);
+			log.debug("GET-Request: Received response with Status={}", statusCode);
+			log.trace("GET-Request: Received response with Payload={}", payload); 	// too long to be always logged
 
 			return new BaseHttpResponse(statusCode, payload);
 		}

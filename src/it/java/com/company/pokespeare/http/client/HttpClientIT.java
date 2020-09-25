@@ -21,7 +21,7 @@ import java.util.Collections;
 // Disabled by default, if needed:
 // 		(1) Comment @Disable
 // 		(2) Change host into application-it.yml (from localhost to remote hostname)
-//@Disabled
+@Disabled
 class HttpClientIT extends BaseIT {
 
 	@Inject
@@ -66,7 +66,7 @@ class HttpClientIT extends BaseIT {
 		// String textValue = "You gave Mr. Tim a hearty meal, but unfortunately what he ate made him die.";
 		// String textValue = "Spits fire that is hot enough to melt boulders. Known to cause forest fires unintentionally.";
 		// String textValue = "When several of these POKéMON gather, their electricity could build and cause lightning storms.";
-		String textValue = "It can freely recombine its own cellular structure to transform into other life-forms.";
+		String textValue = "It+can+freely+recombine+its+own+cellular+structure+to%0Atransform+into+other+life-forms";
 		HttpGet httpGet = new HttpGet(shakespeareUri);
 		URI uri = new URIBuilder(httpGet.getURI()).addParameter(textName, textValue).build();
 		httpGet.setURI(uri);
