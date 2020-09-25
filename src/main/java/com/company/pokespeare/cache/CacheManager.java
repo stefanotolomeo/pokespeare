@@ -1,10 +1,10 @@
 package com.company.pokespeare.cache;
 
-import com.sun.istack.internal.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.util.Assert;
 
+import javax.validation.constraints.NotNull;
 import java.util.Collections;
 import java.util.Map;
 import java.util.Optional;
@@ -23,10 +23,8 @@ public class CacheManager<K, V> {
 	/**
 	 * @param key
 	 * @return An optional containing the value currently associated to the given
-	 *         key, or an empty optional if no such value exists.
-	 *
-	 * @throws IllegalArgumentException
-	 *             if the key is null
+	 * key, or an empty optional if no such value exists.
+	 * @throws IllegalArgumentException if the key is null
 	 */
 	public Optional<V> get(@NotNull K key) {
 		Assert.notNull(key, "Null keys are not supported");
@@ -38,10 +36,8 @@ public class CacheManager<K, V> {
 
 	/**
 	 * @return An optional containing the previous value associated to the key, or
-	 *         an empty optional if the cache didn't contain the key
-	 *
-	 * @throws IllegalArgumentException
-	 *             if either the key or the value is null
+	 * an empty optional if the cache didn't contain the key
+	 * @throws IllegalArgumentException if either the key or the value is null
 	 */
 	public Optional<V> put(@NotNull K key, @NotNull V value) {
 		Assert.notNull(key, "Null keys are not supported");
@@ -55,8 +51,7 @@ public class CacheManager<K, V> {
 	}
 
 	/**
-	 * @throws NullPointerException
-	 *             if the key is null
+	 * @throws NullPointerException if the key is null
 	 */
 	public void remove(@NotNull K key) {
 		Assert.notNull(key, "Null keys are not supported");
@@ -75,7 +70,6 @@ public class CacheManager<K, V> {
 	}
 
 	/**
-	 *
 	 * @return the cache's keySet wrapped with an unmodifiable set
 	 */
 	public Set<K> keys() {
@@ -84,7 +78,6 @@ public class CacheManager<K, V> {
 	}
 
 	/**
-	 *
 	 * @return the cache's keySet wrapped with an unmodifiable set
 	 */
 	public Set<Map.Entry<K, V>> entries() {
