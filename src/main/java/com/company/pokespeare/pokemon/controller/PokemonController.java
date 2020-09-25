@@ -1,6 +1,7 @@
 package com.company.pokespeare.pokemon.controller;
 
 import com.company.pokespeare.http.manager.HttpManager;
+import com.company.pokespeare.pokemon.cache.VisitedCache;
 import com.company.pokespeare.pokemon.dto.PokemonDTO;
 import com.company.pokespeare.pokemon.dto.ShakespeareDTO;
 import com.company.pokespeare.pokemon.exception.ResponseValidationException;
@@ -26,6 +27,9 @@ import java.util.concurrent.TimeUnit;
 @RequestMapping("/pokemon")
 @RestController
 public class PokemonController extends AbstractController {
+
+	@Inject
+	private VisitedCache visitedCache;
 
 	@Inject
 	private HttpManager httpManager;
@@ -70,6 +74,11 @@ public class PokemonController extends AbstractController {
 		try {
 			Preconditions.checkArgument(name != null && !name.isEmpty(), "Invalid input: null or empty");
 
+			if(visitedCache.get(name).isPresent()){
+				log.info("Pokemon={} already in cache. Returning translation from cache", name);
+				return ResponseEntity.status(200).body(Outcome.ok(name, visitedCache.get(name).get()));
+			}
+
 			PokemonRequest req_1 = new PokemonRequest(pokemonCompleteUri + name);
 
 			//@formatter:off
@@ -86,6 +95,8 @@ public class PokemonController extends AbstractController {
 						//  (4) Validate/Parse response and create the overallOutcome
 						ShakespeareDTO shakespeareDTO = responseValidator.validateShakespeareResponse(resp_2);
 						String translation = responseSelector.selectShakespeareTranslation(shakespeareDTO);
+						// (5) Put response in cache
+						visitedCache.put(name, translation);
 						return Outcome.ok(name, translation);
 					}).exceptionally(e -> {
 						log.error("Exception with at least one future", e);

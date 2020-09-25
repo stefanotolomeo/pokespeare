@@ -1,6 +1,7 @@
 package com.company.pokespeare.pokemon.controller;
 
 import com.company.pokespeare.itconfig.BaseIT;
+import com.company.pokespeare.pokemon.cache.VisitedCache;
 import com.company.pokespeare.pokemon.model.Outcome;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -12,6 +13,9 @@ class PokemonControllerIT extends BaseIT {
 
 	@Inject
 	private PokemonController pokemonController;
+
+	@Inject
+	private VisitedCache visitedCache;
 
 	@Test
 	void getPokemonByName_Test(){
