@@ -1,3 +1,10 @@
 {
-  "base_happiness": 40
+  "success": {
+    "total": 1
+  },
+  "contents": {
+    "translated": "'t can freely recombine its own cellular structure to transform into other life-forms.",
+    "text": "It can freely recombine its own cellular structure to transform into other life-forms.",
+    "translation": "shakespeare"
+  }
 }

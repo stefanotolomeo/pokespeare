@@ -17,6 +17,6 @@ http:
         ## other endpoints if needed
         pokemon_species: pokemon-species/
   shakespeare:
-    base: http://localhost:4444/
+    base: https://api.funtranslations.com/translate/
     api:
       shakespeare: shakespeare

@@ -23,4 +23,4 @@ services:
       - ./mappings/shakespeare/ditto.json:/home/wiremock/mappings/shakespeare/ditto.json
       - ./mappings/shakespeare/pikachu.json:/home/wiremock/mappings/shakespeare/pikachu.json
     ports:
-      - 8080:8080
+      - 4444:8080

@@ -7,13 +7,13 @@ request:
 
 http:
   pokemon:
-    base: aaaaa
+    base: https://pokeapi.co/api/v2/
     api:
       ## if needed add other endpoints: berry, evolution, moves, etc..
       pokemon:
         ## other endpoints if needed
         pokemon_species: pokemon-species/
   shakespeare:
-    base: bbbbb
+    base: https://api.funtranslations.com/translate/
     api:
       shakespeare: shakespeare

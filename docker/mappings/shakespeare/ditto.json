@@ -1,7 +1,7 @@
 {
   "request": {
     "method": "GET",
-    "url": "/shakespeare/text=d"
+    "url": "/shakespeare?text=It+can+freely+recombine+its+own+cellular+structure+to+transform+into+other+life-forms."
   },
   "response": {
     "status": 200,

@@ -21,7 +21,7 @@ class PokemonControllerIT extends BaseIT {
 		Assertions.assertNotNull(outcome.getBody());
 		Assertions.assertNotNull(outcome.getBody().getDescription());
 
-		String expectedDitto = "'t can freely recombine its own cellular structure to\\\\ntransform into other life-forms.";
+		String expectedDitto = "'t can freely recombine its own cellular structure to transform into other life-forms.";
 		Assertions.assertEquals(expectedDitto, outcome.getBody().getDescription());
 	}
 }

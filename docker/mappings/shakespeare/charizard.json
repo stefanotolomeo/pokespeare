@@ -1,7 +1,7 @@
 {
   "request": {
     "method": "GET",
-    "url": "/shakespeare/text=c"
+    "url": "/shakespeare?text=Spits+fire+that+is+hot+enough+to+melt+boulders.+Known+to+cause+forest+fires+unintentionally"
   },
   "response": {
     "status": 200,

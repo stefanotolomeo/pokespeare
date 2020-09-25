@@ -1,3 +1,10 @@
 {
-  "base_happiness": 10
+  "success": {
+    "total": 1
+  },
+  "contents": {
+    "translated": "'t keeps its tail hath raised to monitor its surroundings. If 't be true thee yank its tail,  'twill tryeth to bite thee.",
+    "text": "It keeps its tail raised to monitor its surroundings. If you yank its tail, it will try to bite you.",
+    "translation": "shakespeare"
+  }
 }
