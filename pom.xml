@@ -5,7 +5,7 @@
 
     <groupId>com.company</groupId>
     <artifactId>pokespeare</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>1.0.0</version>
 
     <name>PokeSpeare</name>
     <description>What does it happen if an API merges Pokemon and Shakespeare?t</description>
