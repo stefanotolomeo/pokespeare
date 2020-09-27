@@ -1,26 +1,33 @@
-## TODO: instruction for docker containers
+## Instruction for Integration Test with Docker Container
 
-This container is built with the image "clue/json-server" which basically creates a RESTful-API service able to provide
-a fixed JSON for different entrypoints.
+This container is built with the image "rodolpheche/wiremock" which basically creates a RESTful-API service able to provide a fixed JSON for different request.
 
-The registered entrypoints are:
-    (1)  "http://localhost:4444/pokemon/{pokemonId}":
-         it simulates a GET Request to " https://pokeapi.co/api/v2/pokemon-species/{pokemonName or pokemonId}"
-    (2) "http://localhost:4444/shakespeare/{pokemonId}":
-         it simulates a POST Request to "https://api.funtranslations.com/translate/shakespeare"
+The aim is simply to locally simulate real Pokemon and Shakespeare API calls to remote systems and provide actual answer to the caller.
 
-The only Pokemon managed by this docker container are:
-- Charizard (id = 6)
-- Pikachu (id = 25)
-- Ditto (id = 132)
+### How to run
+Look at the main READ_ME into the section "Integration Test"
 
 
-### EXAMPLE ###
+### Mocked Entrypoints
+#### Mock for Pokemon-API
+A GET request to simulate the call to Pokemon-Species API for three specified pokemon: Charizard, Pikachu and Ditto.
 
-To get pokemon-species description for:
-- Charizard ---> "http://localhost:4444/pokemon/6"
-- Pikachu ---> "http://localhost:4444/pokemon/25"
-- Ditto---> "http://localhost:4444/pokemon/132"
+`GET /pokemon/{string:pokemon_name}`
 
-To get shakespeare description for:
-- Charizard --->
+E.g.: [http://localhost:4444/pokemon/charizard]
+
+#### Mock for Shakespeare-API
+A GET request to simulate the call to Shakespeare-Translation API for three description of the aforementioned pokemon.
+
+`GET /shakespeare?text={string:pokemon_description}`
+
+E.g.: for Charizard, the request is: 
+[http://localhost:4444/shakespeare?text=Spits+fire+that+is+hot+enough+to+melt+boulders.+Known+to+cause+forest+fires+unintentionally]
+
+E.g.: for Pikachu, the request is: 
+[http://localhost:4444/shakespeare?text=It+keeps+its+tail+raised+to+monitor+its+surroundings.+If+you+yank+its+tail,+it+will+try+to+bite+you.]
+
+E.g.: for Ditto, the request is: 
+[http://localhost:4444/shakespeare?text=It+can+freely+recombine+its+own+cellular+structure+to+transform+into+other+life-forms.]
+
+Note: the mock is available only for these three descriptions
