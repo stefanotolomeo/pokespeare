@@ -16,8 +16,8 @@ Provide a RESTful API able to translate pokemon description into "shakespearean"
 ### Response
 ```json
 {
-    name: string,
-    description: string
+    "name": String,
+    "description": String
 }
 ```
 
