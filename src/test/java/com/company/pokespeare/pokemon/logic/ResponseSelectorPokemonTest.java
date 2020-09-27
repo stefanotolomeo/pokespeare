@@ -72,7 +72,7 @@ public class ResponseSelectorPokemonTest extends BaseTest {
 	void selectPokemonDescription_Test() {
 		String description = responseSelector.selectPokemonDescription(pokemonDTO_1);
 		Assertions.assertNotNull(description);
-		Assertions.assertEquals("Spits fire that\nis hot enough to\nmelt boulders.\fKnown to cause\nforest fires\nunintentionally.",
+		Assertions.assertEquals("Spits fire that is hot enough to melt boulders. Known to cause forest fires unintentionally.",
 				description);
 	}
 }

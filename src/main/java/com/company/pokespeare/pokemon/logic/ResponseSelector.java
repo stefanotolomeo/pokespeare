@@ -31,10 +31,11 @@ public class ResponseSelector {
 					.findFirst()
 					.get();
 			//@formatter:on
-
-			String cleanedDescription = selectedDescription.replaceAll("[\\n\\t ]", "");
-
 			log.debug("Selected description is: {}", selectedDescription);
+
+			String cleanedDescription = selectedDescription.replaceAll("[[^A-Za-z0-9À-ÿ()\\[\\]\\.\\,\\-\\']]", " ");
+
+			log.debug("Cleaned description is: {}", cleanedDescription);
 			return cleanedDescription;
 		} catch (Exception e) {
 			throw new RuntimeException("Cannot select a pokemon description from PokemonDTO", e);

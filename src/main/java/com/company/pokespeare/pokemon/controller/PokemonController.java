@@ -1,5 +1,6 @@
 package com.company.pokespeare.pokemon.controller;
 
+import com.company.pokespeare.config.Constants;
 import com.company.pokespeare.http.manager.HttpManager;
 import com.company.pokespeare.pokemon.cache.VisitedCache;
 import com.company.pokespeare.pokemon.dto.PokemonDTO;
@@ -24,7 +25,7 @@ import javax.inject.Inject;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.TimeUnit;
 
-@RequestMapping("/pokemon")
+@RequestMapping(Constants.POKEMON_URL)
 @RestController
 public class PokemonController extends AbstractController {
 
