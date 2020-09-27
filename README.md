@@ -7,23 +7,27 @@ Just try it!
 Provide a RESTful API able to translate pokemon description into "shakespearean" text.
 
 ## API
-# Request
-GET /pokemon/{string:pokemon_name}
+### Request
+`GET /pokemon/{string:pokemon_name}`
 
-# Request Example
-GET http://localhost:5000/pokemon/pikachu
+### Request Example
+`GET http://localhost:5000/pokemon/pikachu`
 
-# Response
+### Response
+```json
 {
     name: string,
     description: string
 }
+```
 
-#Response Example
+### Response Example
+```json
 {
     "name": "pikachu",
     "description": "At which hour several of these pokémon gather,  their electricity couldst buildeth and cause lightning storms."
 }
+```
 
 ## Project Management and tools
 This API is developed in JAVA 8 and Spring Framework (in particular, Spring Boot).
@@ -45,42 +49,38 @@ Relevant used tools are:
 ### Unit test
 Running all unit-tests with "mvn test"
 
-## Integration Test
+### Integration Test
 Running integration-test requires both Docker and Docker-Compose properly installed.
 Follow the instructions to install these tools in the official documentation:
-    - Docker: https://docs.docker.com/get-docker/
-    - Docker-Compose: https://docs.docker.com/compose/install/
+- Docker: [https://docs.docker.com/get-docker/](https://docs.docker.com/get-docker/)
+- Docker-Compose: [https://docs.docker.com/compose/install/](https://docs.docker.com/compose/install/)
 
 Steps to run integration-test:
-(1) turn on docker containers for test:
-    (1.a) move to folder ./docker: "cd docker/"
-    (1.b) build containers with docker-compose: "docker-compose -f docker-compose-wiremock.yml build"
-    (1.c) run containers with docker-compose: "docker-compose -f docker-compose-wiremock.yml up"
+1. Turn on docker containers for test:
+- Move to folder ./docker: <code>cd docker/ </code>
+- Build containers with docker-compose: <code>docker-compose -f docker-compose-wiremock.yml build</code>
+- Run containers with docker-compose: <code>docker-compose -f docker-compose-wiremock.yml up</code>
 
-(2) Choose the test and run it
-    (2.a) changing properties into application-it.yml, it is possible to simulate call to both:
-        - mock API (into docker container)
-        - remote API (actual API)
+2. Choose the test and run it
+- Changing properties into application-it.yml, it is possible to simulate call to both:
+- mock API (into docker container)
+- remote API (actual API)
 
 ## Run app within Docker container
-(1) Install docker and docker-compose:
-    - docker: https://docs.docker.com/get-docker/
-    - docker-compose: https://docs.docker.com/compose/install/
-(1) Build the container:
-    - ddocker-compose -f docker-compose-pokespeare.yml build
-(2) Run the container:
-    - docker-compose -f docker-compose-pokespeare.yml.yml up
-(3) Access the application via browser at localhost:5000/
-(4) Turn off the container:
-    - docker-compose -f docker-compose-pokespeare.yml down
+1. Install docker: [https://docs.docker.com/get-docker/](https://docs.docker.com/get-docker/)
+2. Install docker-compose: [https://docs.docker.com/compose/install/](https://docs.docker.com/compose/install/)
+3. Build the container: <code>docker-compose -f docker-compose-pokespeare.yml build </code>
+3. Run the container: <code>docker-compose -f docker-compose-pokespeare.yml.yml up</code>
+4. Access the application via browser: [http://localhost:5000](http://localhost:5000)
+5. Turn off the container: <code>docker-compose -f docker-compose-pokespeare.yml down</code>
 
 ## Limitation and Possible Optimization
-(1) Introduce API versioning: http://{hostname}:{port}/v1/pokemon/{name}
-(2) Shakespeare-API allows at maximum 5-calls per hour. Currently, the application try to overcome this limit using an internal cache
+1. Introduce API versioning: http://{hostname}:{port}/v1/pokemon/{name}
+2. Shakespeare-API allows at maximum 5-calls per hour. Currently, the application try to overcome this limit using an internal cache
 where previous requests are stored and returned without any external call. The best solution is to buy a licence for Shakespeare-API:
 in this scenario, it is likely that a token (or other security mechanism) will be provided and it should be set in the request header
 to Shakespeare-API.
-(3) Currently, the API always gets the first pokemon english description and translate it. Anyway, multiple descriptions are
+3. Currently, the API always gets the first pokemon english description and translate it. Anyway, multiple descriptions are
 available for different game (green, yellow, blu, red, etc.) and it would be better to let the user enter this parameter as request
 parameter.
 For instance, two possible solutions are:
